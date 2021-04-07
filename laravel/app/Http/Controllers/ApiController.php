@@ -7,6 +7,7 @@ use GuzzleHttp\Client;
 use GuzzleHttp\Exception\RequestException;
 use GuzzleHttp\Psr7;
 use Illuminate\Http\Request;
+use App\Http\Requests\ApiRequest;
 
 class ApiController extends Controller
 {
@@ -41,15 +42,13 @@ class ApiController extends Controller
         return view('index', compact('news'));
     }
 
-    public function customIndex(Request $request)
+    public function customIndex(ApiRequest $request)
     {
         try {
             if (isset($request)) {
                 $country = $request->country;
                 $category = $request->category;
                 $url = config('newsapi.news_api_url') . "top-headlines?country=" . $country . "&category=" . $category . "&apiKey=" . config('newsapi.news_api_key');
-            } else {
-                $url = config('newsapi.news_api_url') . "top-headlines?country=jp&apiKey=" . config('newsapi.news_api_key');
             }
 
             $method = "GET";
